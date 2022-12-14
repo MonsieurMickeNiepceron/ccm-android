@@ -15,6 +15,7 @@ import com.android.tp_mickeniepceron.model.CityDataFooter
 import com.android.tp_mickeniepceron.model.CityDataHeader
 import com.android.tp_mickeniepceron.model.CityObjectForRecyclerView
 import com.android.tp_mickeniepceron.viewmodel.CityViewModel
+import kotlin.random.Random
 
 class RecyclerViewActivity : AppCompatActivity() {
 
@@ -40,6 +41,8 @@ class RecyclerViewActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = adapter
+        binding.addItemButton.setOnClickListener { addRandomAndroidVersion() }
+        binding.deleteAllItemButton.setOnClickListener { deleteAndroidVersion() }
 
         adapter.submitList(generateData())
     }
@@ -57,6 +60,15 @@ class RecyclerViewActivity : AppCompatActivity() {
     private fun onItemClick(cityData: CityData, view : View) {
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         Toast.makeText(this, cityData.cityName, Toast.LENGTH_LONG).show()
+    }
+
+    private fun addRandomAndroidVersion() {
+        val random = Random.nextInt(0, 1000)
+        viewModel.insertCity("Saumur", "France", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAACWCAMAAAAfSh8xAAAAD1BMVEXOESb///8AJlR/kqnzxMlwvJaeAAAApUlEQVR4nO3PQREAIAgAMAT6ZzYEeOdja7DIuTpbOh4wNDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0/GJ4AUOofWVeGcMdAAAAAElFTkSuQmCC")
+    }
+
+    private fun deleteAndroidVersion() {
+        viewModel.deleteAllCity()
     }
 
     private fun generateData(): MutableList<CityObjectForRecyclerView> {

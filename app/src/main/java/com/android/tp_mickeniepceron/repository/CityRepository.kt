@@ -1,11 +1,46 @@
 package com.android.tp_mickeniepceron.repository
 
-import com.android.tp_mickeniepceron.model.CityData
-import com.android.tp_mickeniepceron.model.CityDataFooter
-import com.android.tp_mickeniepceron.model.CityDataHeader
-import com.android.tp_mickeniepceron.model.CityObjectForRecyclerView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import com.android.tp_mickeniepceron.architecture.CustomApplication
+import com.android.tp_mickeniepceron.model.*
 
 class CityRepository {
+
+    private val mCityDao =
+        CustomApplication.instance.mApplicationDatabase.mCityDao()
+
+    fun selectAllCity(): LiveData<List<CityData>> {
+        return mCityDao.selectAll().map { list ->
+            list.toCityData()
+        }
+    }
+
+    fun insertCity(cityData: CityData) {
+        mCityDao.insert(cityData.toRoomObject())
+    }
+
+    fun deleteAllCity() {
+        mCityDao.deleteAll()
+    }
+
+    private fun CityData.toRoomObject(): LocalDataSourceSample {
+        return LocalDataSourceSample(
+            cityName = cityName,
+            country = cityCountry,
+            image = image
+        )
+    }
+
+    private fun List<LocalDataSourceSample>.toCityData(): List<CityData> {
+        return map { eachItem ->
+            CityData(
+                cityName = eachItem.cityName,
+                cityCountry = eachItem.country,
+                image = eachItem.image
+            )
+        }
+    }
 
     fun generateData(): MutableList<CityObjectForRecyclerView> {
         val result = mutableListOf<CityObjectForRecyclerView>()
