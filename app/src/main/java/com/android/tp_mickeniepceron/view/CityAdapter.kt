@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.android.tp_mickeniepceron.R
 import com.android.tp_mickeniepceron.databinding.ItemCustomRecyclerBinding
 import com.android.tp_mickeniepceron.databinding.ItemCustomRecyclerHeaderBinding
 import com.android.tp_mickeniepceron.model.CityData
 import com.android.tp_mickeniepceron.model.CityDataFooter
 import com.android.tp_mickeniepceron.model.CityDataHeader
 import com.android.tp_mickeniepceron.model.CityObjectForRecyclerView
+import com.bumptech.glide.Glide
 
 private val diffItemUtils = object : DiffUtil.ItemCallback<CityObjectForRecyclerView>() {
 
@@ -100,6 +102,10 @@ class CityViewHolder(
         ui = cityData
         binding.itemRecyclerViewCityName.text = cityData.cityName
         binding.itemRecyclerViewCityCountry.text = cityData.cityCountry
+        Glide.with(itemView.context)
+            .load(cityData.image)
+            .placeholder(R.drawable.ic_launcher_background)
+            .into(binding.itemRecyclerViewVersionImage)
     }
 }
 

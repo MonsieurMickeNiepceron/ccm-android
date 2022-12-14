@@ -1,65 +1,13 @@
-package com.android.tp_mickeniepceron.view
+package com.android.tp_mickeniepceron.repository
 
-import android.os.Bundle
-import android.view.HapticFeedbackConstants
-import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.android.tp_mickeniepceron.databinding.ActivityRecyclerViewBinding
 import com.android.tp_mickeniepceron.model.CityData
 import com.android.tp_mickeniepceron.model.CityDataFooter
 import com.android.tp_mickeniepceron.model.CityDataHeader
 import com.android.tp_mickeniepceron.model.CityObjectForRecyclerView
-import com.android.tp_mickeniepceron.viewmodel.CityViewModel
 
-class RecyclerViewActivity : AppCompatActivity() {
+class CityRepository {
 
-    private lateinit var binding: ActivityRecyclerViewBinding
-    private lateinit var adapter: CityAdapter
-    private lateinit var viewModel: CityViewModel
-
-
-    private val cityListObserver = Observer<List<CityObjectForRecyclerView>> {
-        adapter.submitList(it)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityRecyclerViewBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this)[CityViewModel::class.java]
-
-        adapter = CityAdapter { item, view ->
-            onItemClick(item, view)
-        }
-
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        binding.recyclerView.adapter = adapter
-
-        adapter.submitList(generateData())
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.cityList.observe(this, cityListObserver)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.cityList.removeObserver(cityListObserver)
-    }
-
-    private fun onItemClick(cityData: CityData, view : View) {
-        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-        Toast.makeText(this, cityData.cityName, Toast.LENGTH_LONG).show()
-    }
-
-    private fun generateData(): MutableList<CityObjectForRecyclerView> {
+    fun generateData(): MutableList<CityObjectForRecyclerView> {
         val result = mutableListOf<CityObjectForRecyclerView>()
 
         mutableListOf(

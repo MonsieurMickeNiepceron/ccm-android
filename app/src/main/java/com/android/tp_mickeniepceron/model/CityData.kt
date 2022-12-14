@@ -12,5 +12,6 @@ data class CityDataFooter(
 
 data class CityData(
     val cityName : String,
-    val cityCountry : String
+    val cityCountry : String,
+    val image: String
 ):CityObjectForRecyclerView()
