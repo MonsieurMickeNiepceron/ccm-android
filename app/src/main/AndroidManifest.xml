@@ -27,6 +27,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".view.ChuckNorrisActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".view.RecyclerViewActivity" />
     </application>
 

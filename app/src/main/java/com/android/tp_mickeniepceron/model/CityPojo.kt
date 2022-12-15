@@ -18,6 +18,3 @@ data class LocalDataSourceSample(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 }
-class CityPojo {
-}
-
